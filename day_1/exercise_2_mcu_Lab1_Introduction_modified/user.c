@@ -108,6 +108,9 @@ void InitApp(void)
     TRISBbits.TRISB12 = 1;
     TRISBbits.TRISB13 = 1;
     TRISBbits.TRISB14 = 1;
+
+    TRISBbits.TRISB5 = 0;
+    PORTBbits.RB5 = 0;
 }
 
 void Delay(int n) {
