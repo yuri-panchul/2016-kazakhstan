@@ -1,0 +1,8 @@
+This code originally came from
+
+The Connected MCU Lab Release 1.2 by Imagination Technologies
+
+and was modified by Yuri Panchul to suit two different boards: 
+
+Digilent chipKIT Wi-Fire board with Microchip PIC32MZ2048EFH064 microcontroller
+Olimex PIC32-EMZ64 board with Microchip PIC32MZ2048EFH064 microcontroller
