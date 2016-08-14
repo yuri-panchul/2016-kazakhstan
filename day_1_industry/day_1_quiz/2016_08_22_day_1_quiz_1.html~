@@ -1,0 +1,70 @@
+<html><body><big><big><pre>
+
+<h2>Introduction to Electronic Industry</h2>
+Joint seminar by Almaty Management University and Imagination
+Technologies
+August 22 2016
+
+<h3>Quiz 1</h3>
+
+
+<h3>Name ___________________________________________________________________</h3>
+
+
+1. Relative sizes of the industries
+
+a) Electronic industry                    ~$20T,
+Semiconductor / chip making industry      ~$30B,
+Electronic Design Automation industry     ~$80B,
+Semiconductor Intellectual Property (SIP) ~$40B
+
+b) Electronic industry                    ~$2T,
+Semiconductor / chip making industry      ~$30B,
+Electronic Design Automation industry     ~$800B,
+Semiconductor Intellectual Property (SIP) ~$40B
+
+c) Electronic industry                    ~$2T,
+Semiconductor / chip making industry      ~$300B,
+Electronic Design Automation industry     ~$8B,
+Semiconductor Intellectual Property (SIP) ~$4B
+
+d) Electronic industry                    ~$200B,
+Semiconductor / chip making industry      ~$30B,
+Electronic Design Automation industry     ~$8B,
+Semiconductor Intellectual Property (SIP) ~$4B
+
+e) Electronic industry                    ~$200B,
+Semiconductor / chip making industry      ~$3B,
+Electronic Design Automation industry     ~$8B,
+Semiconductor Intellectual Property (SIP) ~$40B
+
+
+2. What is the meaning of abbreviation EDA in this course?
+
+a) Enterprise Desktop Alliance
+b) Exploratory Data Analysis
+c) Electronic Design Automation
+
+
+3. Which step in EDA Flow is used to make sure the design does not have
+functional bugs
+
+a) Simulation
+b) Synthesis
+c) Place and Route
+
+
+4. What is the name of the design abstraction which models a synchronous
+digital circuit in terms of the flow of digital signals (data) between
+hardware registers, and the logical operations performed on those signals?
+
+a) Application-Specific Integrated Circuit - ASIC
+b) Field-Programmable Gate Array - FPGA
+c) Hardware Description Language - HDL
+d) Register Transfer Level - RTL
+e) System-on-Chip - SoC
+
+Quiz is created by Yuri Panchul
+
+</pre></big></big>
+</body></html>

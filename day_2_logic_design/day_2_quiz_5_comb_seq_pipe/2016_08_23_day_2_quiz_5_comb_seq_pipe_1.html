@@ -1,0 +1,286 @@
+<html><body><big><big><pre>
+
+<h2>Understanding Digital Logic Design</h2>
+Joint seminar by Almaty Management University and Imagination Technologies
+August 23 2016
+
+<h3>Quiz 2.5 - Combinational, sequential and pipelined implementations
+of power of 5 math function in hardware</h3>
+
+<h3>Name ___________________________________________________________________</h3>
+
+<br><b>The code below contains three modules implementing the same functionality,
+calculating the power of five of a given number. Analyze the code and answer
+the following questions:</b>
+
+module pow_5_implementation_1
+(
+    input  [17:0] n,
+    output [17:0] n_pow_5
+);
+
+    assign n_pow_5 = n * n * n * n * n;
+
+endmodule
+
+//--------------------------------------------------------------------
+
+module pow_5_implementation_2
+(
+    input             clock,
+    input      [17:0] n,
+    output reg [17:0] n_pow_5
+);
+
+    reg [17:0] n_1, n_2, n_3;
+    reg [17:0] n_pow_2, n_pow_3, n_pow_4;
+
+    always @(posedge clock)
+    begin
+        n_1 <= n;
+        n_2 <= n_1;
+        n_3 <= n_2;
+
+        n_pow_2 <= n * n;
+        n_pow_3 <= n_pow_2 * n_1;
+        n_pow_4 <= n_pow_3 * n_2;
+        n_pow_5 <= n_pow_4 * n_3;
+    end
+
+endmodule
+
+//--------------------------------------------------------------------
+
+module pow_5_implementation_3
+(
+    input         clock,
+    input         reset_n,
+    input         run,
+    input  [17:0] n,
+    output        ready,
+    output [17:0] n_pow_5
+);
+
+    reg [4:0] shift;
+
+    always @(posedge clock or negedge reset_n)
+        if (! reset_n)
+            shift <= 0;
+        else if (run)
+            shift <= 5'b10000;
+        else
+            shift <= shift >> 1;
+
+    assign ready = shift [0];
+
+    reg [17:0] r_n, mul;
+
+    always @(posedge clock)
+        if (run)
+        begin
+            r_n <= n;
+            mul <= n;
+        end
+        else
+        begin
+            mul <= mul * r_n;
+        end
+
+    assign n_pow_5 = mul;
+
+endmodule
+
+<br><b>1. Which implementation is purely combinational?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+<br><b>2. Which implementation is sequential?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+<br><b>3. Which implementation is pipelined?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+<br><b>4. Identify the implementation that corresponds to the following schematics:</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+<img src="img/pow_5_schem_seq.png">
+
+<br><b>5. Identify the implementation that corresponds to the following schematics:</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+<img src="img/pow_5_schem_comb.png">
+
+<br><b>6. Identify the implementation that corresponds to the following schematics:</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+<img src="img/pow_5_schem_pipe.png">
+
+<br><b>7. Which implementation is likely to allow the highest maximum frequency
+(assuming that the outputs of the combinational implementation are connected
+to clocked register)?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+
+<br><b>8. Which implementation is likely to use the smallest number of gates?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+
+<br><b>9. Which implementation is likely to have the highest throughput
+(number of calculated pow_5(n) results per seconds)?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+
+<br><b>10. Which implementation is going to have the smallest latency in clock cycles
+(assuming that the outputs of the combinational implementation are connected
+to clocked registers)?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+
+<br><b>11. The testbench instantiated all three implementations of pow_5.</b>
+
+module testbench;
+
+    reg         clock;
+    reg         reset_n;
+    reg         run;
+    reg  [17:0] n;
+    wire        ready;
+
+    wire [17:0] n_pow_5_implementation_1;
+    wire [17:0] n_pow_5_implementation_2;
+    wire [17:0] n_pow_5_implementation_3;
+
+    initial
+    begin
+        clock = 1;
+
+        forever # 50 clock = ! clock;
+    end
+
+    initial
+    begin
+        repeat (2) @(posedge clock);
+        reset_n <= 0;
+        repeat (2) @(posedge clock);
+        reset_n <= 1;
+    end
+
+    pow_5_implementation_1 pow_5_implementation_1
+        (n, n_pow_5_implementation_1);
+
+    pow_5_implementation_2 pow_5_implementation_2
+        (clock, n, n_pow_5_implementation_2);
+
+    pow_5_implementation_3 pow_5_implementation_3
+        (clock, reset_n, run, n, ready, n_pow_5_implementation_3);
+
+    integer i;
+
+    initial
+    begin
+        #0
+        $dumpvars;
+
+        $monitor ("clock %b reset_n %b n %d comb %d seq %d run %b ready %b pipe %d",
+            clock,
+            reset_n,
+            n,
+            n_pow_5_implementation_1,
+            n_pow_5_implementation_2,
+            run,
+            ready,
+            n_pow_5_implementation_3);
+
+        @(posedge reset_n);
+        @(posedge clock);
+
+        for (i = 0; i < 50; i = i + 1)
+        begin
+            n   <= i & 7;
+            run <= (i == 0 || ready);
+
+            @(posedge clock);
+        end
+
+        $finish;
+    end
+
+endmodule
+
+<br><b>An engineer simulated the testbench and got the following waveform.
+However he forgot the order he added the last three signals to the waveform.
+Can you determine which signal is the output of combinational implementation,
+sequential non-pipelined implementation and sequential pipelined implementation?</b>
+
+a) The order is (from upper n_pow_5... to lower n_pow_5...):
+combinational, sequential non-pipelined implementation, pipelined
+
+b) combinational, pipelined, sequential non-pipelined implementation
+
+c) pipelined, combinational, sequential non-pipelined implementation
+
+d) pipelined, sequential non-pipelined implementation, combinational
+
+e) sequential non-pipelined implementation, combinational, pipelined
+
+f) sequential non-pipelined implementation, pipelined, combinational
+
+<img src="img/pow_5_wave_pipe_comb_seq_1.png">
+
+<br><b>Quiz is created by Yuri Panchul</b>
+</pre></big></big></body></html>

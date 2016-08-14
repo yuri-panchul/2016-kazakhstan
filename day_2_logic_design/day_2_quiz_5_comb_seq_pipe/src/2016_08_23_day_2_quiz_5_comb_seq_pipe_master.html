@@ -1,0 +1,217 @@
+START
+<html><body><big><big><pre>
+
+<h2>Understanding Digital Logic Design</h2>
+Joint seminar by Almaty Management University and Imagination Technologies
+August 23 2016
+
+<h3>Quiz 2.5 - Combinational, sequential and pipelined implementations
+of power of 5 math function in hardware</h3>
+
+<h3>Name ___________________________________________________________________</h3>
+
+<br><b>The code below contains three modules implementing the same functionality,
+calculating the power of five of a given number. Analyze the code and answer
+the following questions:</b>
+
+#ifdef VARIANT_1
+#include "pow_5_rtl_comb_pipe_seq.v"
+#endif
+#ifdef VARIANT_2
+#include "pow_5_rtl_comb_seq_pipe.v"
+#endif
+#ifdef VARIANT_3
+#include "pow_5_rtl_pipe_comb_seq.v"
+#endif
+#ifdef VARIANT_4
+#include "pow_5_rtl_pipe_seq_comb.v"
+#endif
+#ifdef VARIANT_5
+#include "pow_5_rtl_seq_comb_pipe.v"
+#endif
+#ifdef VARIANT_6
+#include "pow_5_rtl_seq_pipe_comb.v"
+#endif
+#ifdef VARIANT_7
+#include "pow_5_rtl_seq_pipe_comb.v"
+#endif
+
+<br><b>1. Which implementation is purely combinational?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+<br><b>2. Which implementation is sequential?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+<br><b>3. Which implementation is pipelined?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+<br><b>4. Identify the implementation that corresponds to the following schematics:</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+#if defined (VARIANT_1) || defined (VARIANT_3) || defined (VARIANT_5)
+<img src="img/pow_5_schem_seq.png">
+#elif defined (VARIANT_2) || defined (VARIANT_4) || defined (VARIANT_6)
+<img src="img/pow_5_schem_comb.png">
+#else
+<img src="img/pow_5_schem_pipe.png">
+#endif
+
+<br><b>5. Identify the implementation that corresponds to the following schematics:</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+#if defined (VARIANT_1) || defined (VARIANT_3) || defined (VARIANT_5)
+<img src="img/pow_5_schem_comb.png">
+#elif defined (VARIANT_2) || defined (VARIANT_4) || defined (VARIANT_6)
+<img src="img/pow_5_schem_pipe.png">
+#else
+<img src="img/pow_5_schem_seq.png">
+#endif
+
+<br><b>6. Identify the implementation that corresponds to the following schematics:</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+d) pow_5_implementation_1 and pow_5_implementation_2
+e) pow_5_implementation_1 and pow_5_implementation_3
+f) pow_5_implementation_2 and pow_5_implementation_3
+g) all of them
+h) none of them
+
+#if defined (VARIANT_1) || defined (VARIANT_3) || defined (VARIANT_5)
+<img src="img/pow_5_schem_pipe.png">
+#elif defined (VARIANT_2) || defined (VARIANT_4) || defined (VARIANT_6)
+<img src="img/pow_5_schem_seq.png">
+#else
+<img src="img/pow_5_schem_comb.png">
+#endif
+
+<br><b>7. Which implementation is likely to allow the highest maximum frequency
+(assuming that the outputs of the combinational implementation are connected
+to clocked register)?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+
+<br><b>8. Which implementation is likely to use the smallest number of gates?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+
+<br><b>9. Which implementation is likely to have the highest throughput
+(number of calculated pow_5(n) results per seconds)?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+
+<br><b>10. Which implementation is going to have the smallest latency in clock cycles
+(assuming that the outputs of the combinational implementation are connected
+to clocked registers)?</b>
+
+a) pow_5_implementation_1
+b) pow_5_implementation_2
+c) pow_5_implementation_3
+
+<br><b>11. The testbench instantiated all three implementations of pow_5.</b>
+
+#ifdef VARIANT_1
+#include "pow_5_tb_comb_pipe_seq.v"
+#endif
+#ifdef VARIANT_2
+#include "pow_5_tb_comb_seq_pipe.v"
+#endif
+#ifdef VARIANT_3
+#include "pow_5_tb_pipe_comb_seq.v"
+#endif
+#ifdef VARIANT_4
+#include "pow_5_tb_pipe_seq_comb.v"
+#endif
+#ifdef VARIANT_5
+#include "pow_5_tb_seq_comb_pipe.v"
+#endif
+#ifdef VARIANT_6
+#include "pow_5_tb_seq_pipe_comb.v"
+#endif
+#ifdef VARIANT_7
+#include "pow_5_tb_seq_pipe_comb.v"
+#endif
+
+<br><b>An engineer simulated the testbench and got the following waveform.
+However he forgot the order he added the last three signals to the waveform.
+Can you determine which signal is the output of combinational implementation,
+sequential non-pipelined implementation and sequential pipelined implementation?</b>
+
+a) The order is (from upper n_pow_5... to lower n_pow_5...):
+combinational, sequential non-pipelined implementation, pipelined
+
+b) combinational, pipelined, sequential non-pipelined implementation
+
+c) pipelined, combinational, sequential non-pipelined implementation
+
+d) pipelined, sequential non-pipelined implementation, combinational
+
+e) sequential non-pipelined implementation, combinational, pipelined
+
+f) sequential non-pipelined implementation, pipelined, combinational
+
+#if defined (VARIANT_1)
+<img src="img/pow_5_wave_pipe_comb_seq_1.png">
+#elif defined (VARIANT_2)
+<img src="img/pow_5_wave_pipe_comb_seq_2.png">
+#elif defined (VARIANT_3)
+<img src="img/pow_5_wave_pipe_seq_comb_1.png">
+#elif defined (VARIANT_4)
+<img src="img/pow_5_wave_pipe_seq_comb_2.png">
+#elif defined (VARIANT_5)
+<img src="img/pow_5_wave_seq_pipe_comb_1.png">
+#elif defined (VARIANT_6)
+<img src="img/pow_5_wave_seq_pipe_comb_2.png">
+#elif defined (VARIANT_7)
+<img src="img/pow_5_wave_comb_seq_pipe.png">
+#endif
+
+<br><b>Quiz is created by Yuri Panchul</b>
+</pre></big></big></body></html>

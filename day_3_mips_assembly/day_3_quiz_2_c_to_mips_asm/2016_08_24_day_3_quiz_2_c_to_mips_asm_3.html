@@ -1,0 +1,136 @@
+<html><body>
+<big>
+<big>
+<pre>
+Understanding Computer Architecture
+Joint seminar by Almaty Management University and Imagination
+Technologies
+August 24 2016
+
+Quiz 3.2. Compiling C into MIPS Assembly
+
+
+Name ___________________________________________________________________
+
+
+1. What is the purpose of using program stack in assembly (and any other) programming?
+
+a) Stack is needed to store return addresses for the nested function calls
+b) Stack is used to pass function parameters when there is no place on registers
+c) Stack is used to allocate space for temporary variables when there is no place on registers
+d) Stack is used to save some temporary registers when calling a function
+e) All the above
+
+2. What MIPS assembly code corresponds to the following C code?
+
+int f (int a, int b)
+{
+    int i, sum;
+
+    for (i = a; i <= b; i++)
+        sum += i;
+
+    return sum;
+}
+
+////////// a //////////
+
+f:
+	li	$3,1
+	beq	$4,$3,.L3
+	li	$3,2
+
+	beq	$4,$3,.L6
+	nop
+
+	bne	$4,$0,.L9
+	nop
+
+	lw	$2,%gp_rel(a)($28)
+	j	$31
+	sltu	$2,$0,$2
+
+.L3:
+	li	$2,2
+	lw	$3,%gp_rel(b)($28)
+	j	$31
+	movz	$2,$0,$3
+
+.L6:
+	move	$2,$0
+.L9:
+	j	$31
+	nop
+
+////////// b //////////
+
+f:
+	addiu	$sp,$sp,-24
+	sw	$31,20($sp)
+	sw	$16,16($sp)
+	move	$16,$4
+	beq	$4,$0,.L2
+	li	$2,1
+
+	jal	f
+	addiu	$4,$4,-1
+
+	mul	$2,$2,$16
+.L2:
+	lw	$31,20($sp)
+	lw	$16,16($sp)
+	j	$31
+	addiu	$sp,$sp,24
+
+////////// c //////////
+
+f:
+	slt	$3,$5,$4
+	bne	$3,$0,.L5
+	nop
+
+	addu	$2,$2,$4
+.L4:
+	addiu	$4,$4,1
+	slt	$3,$5,$4
+	beq	$3,$0,.L4
+	addu	$2,$2,$4
+
+	subu	$2,$2,$4
+.L5:
+	j	$31
+	nop
+
+////////// d //////////
+
+f:
+	nor	$2,$0,$6
+	and	$5,$2,$5
+	and	$4,$4,$6
+	or	$2,$5,$4
+	j	$31
+	sw	$2,%gp_rel(e)($28)
+
+////////// e //////////
+
+f:
+	lui	$3,%hi(a)
+	addiu	$3,$3,%lo(a)
+	addiu	$5,$3,40
+.L3:
+	lw	$4,0($3)
+	addiu	$3,$3,4
+	bne	$3,$5,.L3
+	addu	$2,$2,$4
+
+	j	$31
+	nop
+
+///////////////////////
+
+Quiz is created by Yuri Panchul
+</pre>
+</big>
+</big>
+</body>
+</html>

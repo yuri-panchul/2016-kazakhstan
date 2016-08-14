@@ -1,0 +1,418 @@
+<html>
+<body>
+<big>
+<big>
+<pre>
+
+EE589 Final August 23.2014  Name ____________________________________  Student ID __________________
+
+1.1 Which waveform is the simulation result of Verilog code below?
+
+module dut
+(
+    input              clk,
+    input        [7:0] d,
+    output logic [7:0] q
+);
+    always @(posedge clk)
+        q <= d;
+
+endmodule
+
+module testbench;
+
+    logic clk;
+    logic [7:0] d, q;
+
+    dut dut (clk, d, q);
+
+    initial
+    begin
+       clk = 0;
+
+       forever
+           #10 clk = ! clk;
+    end
+
+    initial
+    begin
+        $dumpvars ();
+
+        for (int i = 0; i < 10; i++)
+        begin
+            @(posedge clk);
+            #15;
+            d = i;
+        end
+
+        $finish;
+    end
+
+endmodule
+
+a)
+
+<img src="wave1.png">
+
+b)
+
+<img src="wave25.png">
+
+c)
+
+<img src="wave34.png">
+
+2.1 What schematics correspond to Verilog code below?
+
+module dut
+(
+    input              clk,
+    input        [7:0] d,
+    output logic [7:0] q
+);
+    logic [7:0] r;
+
+    always @(posedge clk)
+        r <= d;
+
+    always @(posedge clk)
+        q <= r;
+
+endmodule
+
+<img width=500 src="2ff_ff_noff.png">
+
+3.1 What Finite State Machine (FSM) state diagram correspond to Verilog code below?
+
+module dut
+(
+    input  clk,
+    input  resetn,
+    input  a,
+    output b
+);
+    logic [1:0] state;
+
+    always @(posedge clk)
+        if (! resetn)
+            state <= 0;
+        else
+            case (state)
+            0: if (  a) state <= 1;
+            1: if (! a) state <= 2;
+            2:          state <= 3;
+            3:          state <= 0;
+            endcase
+
+    assign b = (state == 2);
+
+endmodule
+
+<img width=500 src="fsm.png">
+
+4.1 What MIPS assembly code corresponds to the following C code?
+
+int e;
+
+void f (int a, int b, int mask)
+{
+    e = (a & mask) | (b & ~ mask);
+}
+
+<big><b>////////// a //////////</b></big>
+
+f:
+	li	$3,1
+	beq	$4,$3,.L3
+	li	$3,2
+
+	beq	$4,$3,.L6
+	nop
+
+	bne	$4,$0,.L9
+	nop
+
+	lw	$2,%gp_rel(a)($28)
+	j	$31
+	sltu	$2,$0,$2
+
+.L3:
+	li	$2,2
+	lw	$3,%gp_rel(b)($28)
+	j	$31
+	movz	$2,$0,$3
+
+.L6:
+	move	$2,$0
+.L9:
+	j	$31
+	nop
+
+<big><b>////////// b //////////</b></big>
+
+f:
+	addiu	$sp,$sp,-24
+	sw	$31,20($sp)
+	sw	$16,16($sp)
+	move	$16,$4
+	beq	$4,$0,.L2
+	li	$2,1
+
+	jal	f
+	addiu	$4,$4,-1
+
+	mul	$2,$2,$16
+.L2:
+	lw	$31,20($sp)
+	lw	$16,16($sp)
+	j	$31
+	addiu	$sp,$sp,24
+
+<big><b>////////// c //////////</b></big>
+
+f:
+	slt	$3,$5,$4
+	bne	$3,$0,.L5
+	nop
+
+	addu	$2,$2,$4
+.L4:
+	addiu	$4,$4,1
+	slt	$3,$5,$4
+	beq	$3,$0,.L4
+	addu	$2,$2,$4
+
+	subu	$2,$2,$4
+.L5:
+	j	$31
+	nop
+
+<big><b>////////// d //////////</b></big>
+
+f:
+	nor	$2,$0,$6
+	and	$5,$2,$5
+	and	$4,$4,$6
+	or	$2,$5,$4
+	j	$31
+	sw	$2,%gp_rel(e)($28)
+
+<big><b>////////// e //////////</b></big>
+
+f:
+	lui	$3,%hi(a)
+	addiu	$3,$3,%lo(a)
+	addiu	$5,$3,40
+.L3:
+	lw	$4,0($3)
+	addiu	$3,$3,4
+	bne	$3,$5,.L3
+	addu	$2,$2,$4
+
+	j	$31
+	nop
+
+<big><b>///////////////////////</b></big>
+
+5.1 What kind of delay is illustrated on the picture below (marked by "?")?
+
+a) Propagation delay: tpd = max delay from input to output
+
+b) Contamination delay: tcd = min delay from input to output
+
+c) Skew: difference between two clock edges. The clock doesn’t arrive at all registers at same time.
+
+<img width=500 src="delay_skew.png">
+
+6.1 What kind of timing constraint is illustrated on the picture below (marked by "?")?
+
+a) Setup time: tsetup = time before clock edge data must be stable (i.e. not changing)
+
+b) Hold time: thold = time after clock edge data must be stable
+
+c) Aperture time: ta = time around clock edge data must be stable (ta = tsetup +  thold)
+
+d) Tc = minimum and maximum delays between registers
+
+<img width=500 src="delay_between_registers.png">
+
+7.1 What kind of cache is likely to be shown on the picture (marked by "?")?
+
+a) Direct L1 cache
+
+b) Two-way L1 cache
+
+c) L2 cache
+
+<img width=750 src="caches_in_cluster_l2.png">
+
+8.1 Encode MIPS instruction
+
+sll $8, $9, 4
+
+a) 00084902 
+b) 00084903 
+c) 00094100 
+d) 00094102 
+e) 00094103 
+
+9.1 Disassemble MIPS instruction
+
+01084025 		
+
+a) sltu $10, $9, $8 
+b) bltz $8, 1f      
+c) lb $8, ($8)    
+d) srav $9, $8, $10 
+e) or $8, $8, $8  
+
+10.1 What is the result of the following MIPS program execution?
+
+	li	$8, 12
+	li	$9, 13
+	li	$10, 14
+	addu	$8, $9, $10
+
+a) $8=0x0000000c, $9=0x0000000d, $10=00000019
+b) $8=0x0000000c, $9=0x0000001a, $10=0000000e
+c) $8=0x00000014, $9=0x00000012, $10=00000019
+d) $8=0x0000001b, $9=0x0000000d, $10=0000000e
+e) $8=0x0000000c, $9=0x0000001a, $10=0000000e
+
+11.1 Which rule for signal assignment is violated in the following code?
+
+a) Synchronous sequential logic: use always @(posedge clk) or always_ff @(posedge clk)
+and nonblocking assignments (<=)    
+
+        always_ff @ (posedge clk)
+		   q <= d; // nonblocking
+
+b) Simple combinational logic: use continuous assignments (assign…)
+
+             assign y = a & b; 
+
+c) More complicated combinational logic: use always @* or always_comb and blocking assignments (=)
+
+d) Assign a signal in only one always statement or continuous assignment statement
+
+e) This code does not violate any rules for signal assignment
+
+module dut
+(
+    input              clk,
+    input        [7:0] d,
+    output logic [7:0] q
+);
+    logic [7:0] r;
+
+    always @(posedge clk)
+        r = d;
+
+    always @(posedge clk)
+        q = r;
+
+endmodule
+
+12.1 Suppose you are using the following module
+to generate low-frequency clock using 5 MHz clock.
+What will be the resulting frequencies
+of clock_for_debouncing and clock_for_display?
+
+a) 153 Hz and 2441 Hz
+b) 15.3 Hz and 244.1 Hz
+c) 1.53 Hz and 24.41 Hz
+d) 95.4 Hz and 1525 Hz
+e) 9.54 Hz and 152.5 Hz
+
+module clock_divider
+(
+    input  clock,
+    input  reset,
+    output clock_for_debouncing,
+    output clock_for_display
+);
+
+    reg [19:0] counter;
+
+    always @(posedge clock)
+    begin
+        if (reset)
+            counter <= 0;
+        else
+            counter <= counter + 1;
+    end
+
+    assign clock_for_debouncing = counter [19];
+    assign clock_for_display    = counter [15];
+
+endmodule
+
+13.1 What is the function of the resistor in this particular circuit?
+
+a) To protect LED from excessive current
+b) Pullup - to provide the default value 1 for the input
+c) Pulldown - to provide the default value 0 for the input
+d) All the above
+e) This resistor does not have any function in this circuit
+
+<img src="resistor_pulldown.png">
+
+14.1 What is the formula for program execution time?
+
+a) Execution Time = (#instructions)(cycles/instruction)(cycle/seconds)
+b) Execution Time = (#instructions)/(cycles/instruction)(seconds/cycle)
+c) Execution Time = (#instructions)(cycles/instruction)(seconds/cycle)
+d) Execution Time = (#instructions)(instruction/cycles)(seconds/cycle)
+e) Execution Time = (#instructions)/((cycles/instruction)(seconds/cycle))
+
+15.1 Relative sizes of the industries
+
+a) Electronic industry                    ~$20T,
+Semiconductor / chip making industry      ~$30B,
+Electronic Design Automation industry     ~$80B,
+Semiconductor Intellectual Property (SIP) ~$40B
+
+b) Electronic industry                    ~$2T,
+Semiconductor / chip making industry      ~$30B,
+Electronic Design Automation industry     ~$800B,
+Semiconductor Intellectual Property (SIP) ~$40B
+
+c) Electronic industry                    ~$2T,
+Semiconductor / chip making industry      ~$300B,
+Electronic Design Automation industry     ~$8B,
+Semiconductor Intellectual Property (SIP) ~$4B
+
+d) Electronic industry                    ~$200B,
+Semiconductor / chip making industry      ~$30B,
+Electronic Design Automation industry     ~$8B,
+Semiconductor Intellectual Property (SIP) ~$4B
+
+e) Electronic industry                    ~$200B,
+Semiconductor / chip making industry      ~$3B,
+Electronic Design Automation industry     ~$8B,
+Semiconductor Intellectual Property (SIP) ~$40B
+
+16.1 What is the major limitation for in-order single pipeline microarchitectures
+with deep (long) pipelines?
+
+a) Lack of parallelism in multiple instruction processing
+b) Frequent pipeline flushes during jumps
+c) Instruction dependencies
+d) For special applications, like graphics, requires special programming
+e) Memory sharing between processors
+
+Test written by Yuri Panchul
+Sources of pictures:
+
+Slides from Steve Harris and Sarah Harris that accompany textbook
+Digital Design and Computer Architecture, Second Edition by David Harris and Sarah Harris, 2012
+See MIPS Run Linux (2nd, 06) by Dominic Sweetman
+http://tinkerlog.com/2009/04/05/driving-an-led-with-or-without-a-resistor/
+http://learn.sparkfun.com/tutorials/pull-up-resistors
+http://ieeetamu.org/mcc/wsref/
+http://imgtec.com
+</pre>
+</big>
+</big>
+</body>
+</html>
