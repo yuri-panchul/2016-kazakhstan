@@ -1,0 +1,88 @@
+<html><body><big><big><pre>
+
+<h2>Understanding Digital Logic Design</h2>
+Joint seminar by Almaty Management University and Imagination Technologies
+August 23 2016
+
+<h3>Quiz 2.1 - Combinational Logic</h3>
+
+<h3>Name ___________________________________________________________________</h3>
+
+1. Which waveform is the result of the simulation below?
+
+module design (input a, input b, output o);
+
+    assign o = ~ a & ~ b;
+
+endmodule
+
+module tb;
+
+    logic a, b, o;
+
+    design design_inst (a, b, o);
+
+    initial
+    begin
+        $dumpvars;
+        $monitor ("%t a %b b %b o %b", $time, a, b, o);
+
+        #10;
+        a = 0; b = 0; #10;
+        a = 1; b = 0; #10;
+        a = 0; b = 1; #10;
+        a = 1; b = 1; #10;
+    end
+
+endmodule
+
+a)
+
+<img width=500 src="img/wave_and.png">
+
+b)
+
+<img width=500 src="img/wave_not_and_not.png">
+
+c)
+
+<img width=500 src="img/wave_not_or_not.png">
+
+d)
+
+<img width=500 src="img/wave_or.png">
+
+e)
+
+<img width=500 src="img/wave_xor.png">
+
+2. What is the result of synthesis of this module?
+
+module design
+(
+    input  a,
+    input  b,
+    output o
+);
+
+    assign o = a & b;
+
+endmodule
+
+<img width=100% src="img/adders.png">
+
+3. What kind of delay is illustrated on the picture below (marked by "?")?
+
+a) Propagation delay: tpd = max delay from input to output
+
+b) Contamination delay: tcd = min delay from input to output
+
+<img width=500 src="img/delay_contamination.png">
+
+Quiz is created by Yuri Panchul
+
+Sources of some pictures:
+
+Slides from Steve Harris and Sarah Harris that accompany textbook
+Digital Design and Computer Architecture, Second Edition by David Harris and Sarah Harris, 2012
+</pre></big></big></body></html>
