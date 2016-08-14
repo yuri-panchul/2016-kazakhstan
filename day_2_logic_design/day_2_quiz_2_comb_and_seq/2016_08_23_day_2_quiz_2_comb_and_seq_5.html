@@ -173,11 +173,11 @@ and the corresponding waveform:</b>
 
 <h3><font color=red>A)</font></h3>
 
-<img width=500 src="img/schem_noff.png">
+<img width=500 src="img/schem_2ff.png">
 
 <h3><font color=red>B)</font></h3>
 
-<img width=500 src="img/schem_2ff.png">
+<img width=500 src="img/schem_noff.png">
 
 <h3><font color=red>C)</font></h3>
 
@@ -185,15 +185,15 @@ and the corresponding waveform:</b>
 
 <h3><font color=red>X)</font></h3>
 
-<img width=800 src="img/wave_2ff.png">
+<img width=800 src="img/wave_ff.png">
 
 <h3><font color=red>Y)</font></h3>
 
-<img width=800 src="img/wave_ff.png">
+<img width=800 src="img/wave_noff.png">
 
 <h3><font color=red>Z)</font></h3>
 
-<img width=800 src="img/wave_noff.png">
+<img width=800 src="img/wave_2ff.png">
 
 <b>17. What kind of delay is illustrated on the picture below (marked by "?")?</b>
 
@@ -201,9 +201,9 @@ a) Propagation delay: tpd = max delay from input to output
 
 b) Contamination delay: tcd = min delay from input to output
 
-c) Skew: difference between two clock edges. The clock doesn’t arrive at all registers at same time
+c) Skew: difference between two clock edges. The clock doesn’t arrive at all registers at same time.
 
-<img width=500 src="img/delay_contamination.png">
+<img width=500 src="img/delay_skew.png">
 
 <b>18. What kind of timing constraint is illustrated on the picture below (marked by "?")?</b>
 
@@ -215,7 +215,7 @@ c) Aperture time: ta = time around clock edge data must be stable (ta = tsetup +
 
 d) Tc = minimum and maximum delays between registers
 
-<img width=500 src="img/constraint_setup.png">
+<img width=500 src="img/delay_between_registers.png">
 
 <b>19. Which rule for signal assignment is violated in the following code?</b>
 
@@ -235,40 +235,19 @@ d) Assign a signal in only one always statement or continuous assignment stateme
 
 e) This code does not violate any rules for signal assignment
 
-module pattern_fsm_moore
+module dut
 (
-    input  clock,
-    input  resetn,
-    input  a,
-    input  b,
-    output y
+    input              clk,
+    input        [7:0] d,
+    output logic [7:0] q
 );
+    logic [7:0] r;
 
-    parameter [1:0] S0 = 0, S1 = 1, S2 = 2, S3 = 3;
+    always @(posedge clk)
+        r = d;
 
-    reg [1:0] state, next_state;
-
-    // state register
-
-    always @ (posedge clock or negedge resetn)
-        if (! resetn)
-            state <= S0;
-        else
-            state <= next_state;
-
-    // next state logic
-
-    always @*
-        case (state)
-        S0: next_state <= a ? S0 : S1;
-        S1: next_state <= a ? S1 : S2;
-        S2: next_state <= S3;
-        S3: next_state <= a ? S2 : b ? S0 : S1;
-        endcase
-
-    // output logic
-
-    assign y = (state == S3);
+    always @(posedge clk)
+        q = r;
 
 endmodule
 

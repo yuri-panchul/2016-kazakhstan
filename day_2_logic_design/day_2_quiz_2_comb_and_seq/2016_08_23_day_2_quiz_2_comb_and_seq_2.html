@@ -173,7 +173,7 @@ and the corresponding waveform:</b>
 
 <h3><font color=red>A)</font></h3>
 
-<img width=500 src="img/schem_2ff.png">
+<img width=500 src="img/schem_ff.png">
 
 <h3><font color=red>B)</font></h3>
 
@@ -181,7 +181,7 @@ and the corresponding waveform:</b>
 
 <h3><font color=red>C)</font></h3>
 
-<img width=500 src="img/schem_ff.png">
+<img width=500 src="img/schem_2ff.png">
 
 <h3><font color=red>X)</font></h3>
 
@@ -194,6 +194,87 @@ and the corresponding waveform:</b>
 <h3><font color=red>Z)</font></h3>
 
 <img width=800 src="img/wave_2ff.png">
+
+<b>17. What kind of delay is illustrated on the picture below (marked by "?")?</b>
+
+a) Clock-to-Q Propagation delay:
+tpcq = time after clock edge that the output Q is guaranteed to be stable (i.e., to stop changing)
+
+b) Clock-to-Q Contamination delay:
+tccq = time after clock edge that Q might be unstable (i.e., start changing)
+
+c) Skew: difference between two clock edges. The clock doesn’t arrive at all registers at same time.
+
+<img width=500 src="img/delay_clock_to_q_contamination.png">
+
+<b>18. What kind of timing constraint is illustrated on the picture below (marked by "?")?</b>
+
+a) Setup time: tsetup = time before clock edge data must be stable (i.e. not changing)
+
+b) Hold time: thold = time after clock edge data must be stable
+
+c) Aperture time: ta = time around clock edge data must be stable (ta = tsetup +  thold)
+
+d) Tc = minimum and maximum delays between registers
+
+<img width=500 src="img/constraint_hold.png">
+
+<b>19. Which rule for signal assignment is violated in the following code?</b>
+
+a) Synchronous sequential logic: use always @(posedge clk) or always_ff @(posedge clk)
+and nonblocking assignments (<=)    
+
+        always_ff @ (posedge clk)
+		   q <= d; // nonblocking
+
+b) Simple combinational logic: use continuous assignments (assign…)
+
+             assign y = a & b; 
+
+c) More complicated combinational logic: use always @* or always_comb and blocking assignments (=)
+
+d) Assign a signal in only one always statement or continuous assignment statement
+
+e) This code does not violate any rules for signal assignment
+
+
+module pattern_fsm_moore
+(
+    input  clock,
+    input  resetn,
+    input  a,
+    input  b,
+    output y
+);
+
+    parameter [1:0] S0 = 0, S1 = 1, S2 = 2, S3 = 3;
+
+    reg [1:0] state, next_state;
+
+    // state register
+
+    always @ (posedge clock or negedge resetn)
+        if (! resetn)
+            state = S0;
+        else
+            state = next_state;
+
+    // next state logic
+
+    always @*
+        case (state)
+        S0: next_state = a ? S0 : S1;
+        S1: next_state = a ? S1 : S2;
+        S2: next_state = S3;
+        S3: next_state = a ? S2 : b ? S0 : S1;
+        endcase
+
+    // output logic
+
+    assign y = (state == S3);
+
+endmodule
+
 
 Quiz is created by Yuri Panchul
 
