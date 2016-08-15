@@ -1,0 +1,524 @@
+<html>
+<body>
+<h3>Individual project #3
+</h3><h3>Sequential design
+</h3><h3>June 12, 2015
+</h3><p>
+</p><p>An example introductory project: Implement a design of a shift register with enable signal. The design should input a single bit from a key and put in into the shift register. The current state and the output of the shift register should be displayed on LEDs in binary representation. In addition, the current state of the shift register should be displayed on static multi-digit seven-segment display in hexadecimal form.
+</p><p>
+</p><p>3.1. Modify the counter design to count in decimal instead of hexadecimal. Not 0, 1, 2, ... 9, A, B, C, D, E, F, 10, 11, ... FFFF - but 0, 1, 2, ... 9, 10, 11, ... 9999, 0, 1, 2, ... Hint: you may need to add decimal digits separately and propagate carry.
+</p><p>
+</p><p>3.2. Modify the counter design to count signed two's complement 12-bit number backwards. Output the result in hexadecimal representation with a sign: 000, -800, -7FF, -7FE, ... -002, -001, 000, 001, 002, ... 7FF, -800, ...
+</p><p>
+</p><p>3.3. Modify the counter design to count with three different speeds, depending on pressed button.
+</p><p>
+</p><p>3.4. Modify the counter design to count either forward (0, 1, 2, ...) or backward (0, FFFF, FFFE, ... , 3, 2, 1, 0, FFFF ...), depending on pressed button.
+</p><p>
+</p><p>3.5. Modify the counter design to count either adding 1, or 2, or 3, depending on pressed buttons.
+</p><p>
+</p><p>3.6. Modify the counter design to add disable signal that pauses counting. Connect this signal to a button.
+</p><p>
+</p><p>3.7. Modify the counter design to count separately in each digit. Not 0000, 0001, 0002, ... FFFE, FFFF, 0000 - but 0000, 1111, 2222, 3333, ... EEEE, FFFF, 0000.
+</p><p>
+</p><p>3.8. Modify the counter design to count separately in each two digits - 0000, 0101, 0202, ... FEFE, FFFF, 0000.
+</p><p>
+</p><p>3.9. Modify the counter design to count separately in digit 3 and digits 2:0 - 0000, 1001, 2002, ... F00F, 0010, 1011, ... EFFE, FFFF, 0000.
+</p><p>
+</p><p>3.10. Modify the counter design to count separately in each digit with different speed: 0000, 1234, 2468, 369C, 48C0, 5AF4, ... In other words one digit 0, 1, 2, ... F, 0; second 0, 2, 4, 6, ... E, 0; third one 0, 3, 6, 9, C, F, 2, 5, 8, B, E, 1, 4, 7, A, D, 0, fourth 0, 4, 8, C, 0, ...
+</p><p>
+</p><p>3.11. Implement the design that generates Fibonnacci numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ... The next number is found by adding up the two numbers before it.
+</p><p>  
+</p><p>3.12. Modify the shift register design to make LED lights moving not from left to right, but from right to left. Not 10011000, 01001100, 00100110, 00010011, 00001001, 00000100, ... - but 10011000, 00110000, 01100000, 11000000, ...
+</p><p>  
+</p><p>3.13. Modify the shift register design to make LED lights moving either from left to right or from right to left - depending on pressed button.
+</p><p>  
+</p><p>3.14. Modify the shift register design to make LED lights moving with different speed - depending on pressed button.
+</p><p>  
+</p><p>3.15. Modify the shift register design to make LED lights circularly: 10011000, 01001100, 00100110, 00010011, 10001001, 11000100, 01100010, 00110001, 10011000, ... Use one button as input, and a second button as input enable.
+</p><p>  
+</p><p>3.16. Modify the shift register design to make LED lights moving circularly and either from left to right or from right to left - depending on pressed button. Use one button as input, second button as input enable, and third button to control the direction of movement.
+</p><p>  
+</p><p>3.17. Modify the shift register design by splitting it into two independent 8-bit wide shift registers, with inputs coming from two different buttons.
+</p><p>  
+</p><p>3.18. Modify the shift register design by splitting it into two independent 8-bit wide shift registers, with inputs coming from the same button and with different speeds of shifting. The first should shift with the speed of one bit per clock cycle, the second - with the speed of two bits per clock cycle.
+</p><p>  
+</p><p>3.19. Modify the shift register design by splitting it into two independent 8-bit wide shift registers, with inputs coming from the same button and with different speeds of shifting. The first should shift with the speed of one bit per clock cycle, the second - with the speed of one bit every other cycle.
+</p><p>  
+</p><p>3.20. Implement a variant of exercise (18) with circular movements of LED lights. Use one button as input, and a second button as input enable.
+</p><p>
+</p><p>3.21. Implement a variant of exercise (19) with circular movements of LED lights. Use one button as input, and a second button as input enable.
+</p><p>  
+</p><p>3.22. Implement a variant of exercise (18) with LEDs connected to the first shift register moving from left to right and LEDs connected to another one - from right to left.
+</p><p>  
+</p><p>3.23. Implement a variant of exercise (19) with LEDs connected to the first shift register moving from left to right and LEDs connected to another one - from right to left.
+</p><p>  
+</p><p>3.24. Implement a variant of exercise (22) with circular movements of LED lights. Use one button as input, and a second button as input enable.
+</p><p>  
+</p><p>3.25. Implement a variant of exercise (23) with circular movements of LED lights. Use one button as input, and a second button as input enable.
+</p><p>  
+</p><p>3.26. Modify the state machine design below by counting the occurrences of "01" sequences (i.e. counting the number of event when moore_out and mealy_out asserted). Output the number of moore_out events to the digits 3:2 of seven-segment display and the number of mealy_out events to the digits 1:0 of seven-segment display.
+</p><p>  
+</p><p>3.27. Modify the state machine design below to recognize the sequences of "0101" instead of "01". You need to implement only Moore machine.
+</p><p>  
+</p><p>3.28. Modify the state machine design below to recognize the sequences of "010101" instead of "01". You need to implement only Mealy machine.
+</p><p>  
+</p><p>3.29. Implement a variant of exercise 27 where you count the number of sequences instead of just recognizing them. Output the value of the counter to seven-segment display.
+</p><p>  
+</p><p>3.30. Implement a variant of exercise 28 where you count the number of sequences instead of just recognizing them. Output the value of the counter to seven-segment display.
+</p><p>
+</p><p>Additional:
+</p><p>
+</p><p>3.31. Implement a variant of exercise 26 with fast clock (using 100 MHz clk instead of 1.49 Hz clock) for the shift register and state machines. When you press the input button once, the design may detect several "01" sequences because of bouncing. Try different buttons and switches on FPGA board as inputs. Report the results - are you able to detect bouncing?
+</p><p>  
+</p><p>3.32. A variant of exercise 31 modified to recognize the sequences of "0101" instead of "01". You need to implement only Moore machine.
+</p><p>  
+</p><p>3.33. A variant of exercise 31 modified to recognize the sequences of "010101" instead of "01". You need to implement only Mealy machine.
+</p><p>  
+</p><p>3.34. Modify the counter design to use ripple-carry adder built using logical operations instead of the adder created by synthesizing Verilog "+" operation.
+</p><p>  
+</p><p>3.35. Modify the counter design to use carry-lookahead adder built using logical operations instead of the adder created by synthesizing Verilog "+" operation.
+</p><p>
+</p><p>
+</p><p>
+<hr>
+<pre>
+
+Reference materials:
+
+/--------------------------------------------------------------------
+
+// Sequential building block: counter with load and better display
+
+module counter_with_load
+(
+    input             clock,
+    input             resetn,
+
+    input             load,
+    input      [15:0] load_data,
+    output reg [15:0] count
+);
+
+    always @ (posedge clock or negedge resetn)
+    begin
+        if (! resetn)
+            count <= 0;
+        else if (load)
+            count <= load_data;
+        else
+            count <= count + 1;
+    end
+
+endmodule
+
+//--------------------------------------------------------------------
+
+module clock_divider_100_MHz_to_95_4_Hz_and_1_53_KHz
+(
+    input  clock_100_MHz,
+    input  resetn,
+    output clock_95_4_Hz,
+    output clock_1_53_KHz
+);
+
+    // 100 MHz / 2 ** 20 = 95.4 Hz
+    // 100 MHz / 2 ** 16 = 1.53 KHz
+
+    reg [29:0] counter;
+
+    always @ (posedge clock_100_MHz)
+    begin
+        if (! resetn)
+            counter <= 0;
+        else
+            counter <= counter + 1;
+    end
+
+    assign clock_95_4_Hz  = counter [19];
+    assign clock_1_53_KHz = counter [15];
+
+endmodule
+
+//--------------------------------------------------------------------
+
+module display
+(
+    input             clock,
+    input             resetn,
+    input      [15:0] number,
+
+    output reg [ 6:0] seven_segments,
+    output reg        dot,
+    output reg [ 3:0] anodes
+);
+
+    function [6:0] bcd_to_seg (input [3:0] bcd);
+
+        case (bcd)
+        'h0: bcd_to_seg = 'b1000000;  // a b c d e f g
+        'h1: bcd_to_seg = 'b1111001;
+        'h2: bcd_to_seg = 'b0100100;  //   --a--
+        'h3: bcd_to_seg = 'b0110000;  //  |     |
+        'h4: bcd_to_seg = 'b0011001;  //  f     b
+        'h5: bcd_to_seg = 'b0010010;  //  |     |
+        'h6: bcd_to_seg = 'b0000010;  //   --g--
+        'h7: bcd_to_seg = 'b1111000;  //  |     |
+        'h8: bcd_to_seg = 'b0000000;  //  e     c
+        'h9: bcd_to_seg = 'b0011000;  //  |     |
+        'ha: bcd_to_seg = 'b0001000;  //   --d-- 
+        'hb: bcd_to_seg = 'b0000011;
+        'hc: bcd_to_seg = 'b1000110;
+        'hd: bcd_to_seg = 'b0100001;
+        'he: bcd_to_seg = 'b0000110;
+        'hf: bcd_to_seg = 'b0001110;
+        endcase
+
+    endfunction
+
+    reg [1:0] i;
+
+    always @ (posedge clock or negedge resetn)
+    begin
+        if (! resetn)
+        begin
+            seven_segments <=   bcd_to_seg (0);
+            dot            <= ~ 0;
+            anodes         <= ~ 'b0001;
+
+            i <= 0;
+        end
+        else
+        begin
+            seven_segments <=   bcd_to_seg (number [i * 4 +: 4]);
+            dot            <= ~ 0;
+            anodes         <= ~ (1 << i);
+
+            i <= i + 1;
+        end
+    end
+
+endmodule
+
+//--------------------------------------------------------------------
+
+module basys3_7
+(
+    input         clk,
+
+    input         btnC,
+    input         btnU,
+    input         btnL,
+    input         btnR,
+    input         btnD,
+
+    input  [15:0] sw,
+
+    output [15:0] led,
+
+    output [ 6:0] seg,
+    output        dp,
+    output [ 3:0] an
+);
+
+    wire clock;
+    wire resetn = ! btnU;
+
+    wire clock;
+    wire display_clock;
+
+    clock_divider_100_MHz_to_95_4_Hz_and_1_53_KHz clock_divider
+    (
+        .clock_100_MHz  ( clk           ),
+        .resetn         ( resetn        ),
+        .clock_95_4_Hz  ( clock         ),
+        .clock_1_53_KHz ( display_clock )
+    );
+
+    wire [15:0] count;
+
+    counter_with_load counter_with_load
+    (
+        .clock      ( clock  ),
+        .resetn     ( resetn ),
+        .load       ( btnC   ),
+        .load_data  ( sw     ),
+        .count      ( count  )
+    );
+
+    assign led = count;
+
+    display display
+    (
+        .clock          ( display_clock  ),
+        .resetn         ( resetn         ),
+        .number         ( count          ),
+
+        .seven_segments ( seg            ),
+        .dot            ( dp             ),
+        .anodes         ( an             )
+    );
+
+endmodule
+
+//--------------------------------------------------------------------
+
+// Sequential building block: shift register
+
+module shift_register
+(
+    input             clock,
+    input             resetn,
+    input             in,
+    output            out,
+    output reg [15:0] data
+);
+
+    always @ (posedge clock or negedge resetn)
+    begin
+        if (! resetn)
+            data <= 16'hABCD;
+        else
+            data <= { in, data [15:1] };
+            // data <= (data >> 1) | (in << 15);
+    end
+    
+    assign out = data [0];
+
+endmodule
+
+module basys3_8
+(
+    input         clk,
+
+    input         btnC,
+    input         btnU,
+    input         btnL,
+    input         btnR,
+    input         btnD,
+
+    input  [15:0] sw,
+
+    output [15:0] led,
+
+    output [ 6:0] seg,
+    output        dp,
+    output [ 3:0] an
+);
+
+    wire clock;
+    wire resetn = ! btnU;
+
+    clock_divider_100_MHz_to_1_49_Hz clock_divider
+    (
+        .clock_100_MHz (clk),
+        .resetn        (resetn),
+        .clock_1_49_Hz (clock)
+    );
+
+    wire out;
+
+    shift_register shift_register
+    (
+        .clock      ( clock  ),
+        .resetn     ( resetn ),
+        .in         ( btnC   ),
+        .out        ( out    ),
+        .data       ( led    )
+    );
+
+    assign seg = out ? 7'b1111001 : 7'b1000000;
+    assign dp  = 1'b1;
+    assign an  = 4'b1110;
+
+endmodule
+
+//--------------------------------------------------------------------
+
+// Smiling Snail FSM derived from David Harris & Sarah Harris
+
+module pattern_fsm_moore
+(
+    input  clock,
+    input  resetn,
+    input  a,
+    output y
+);
+
+    parameter [1:0] S0 = 0, S1 = 1, S2 = 2;
+
+    reg [1:0] state, next_state;
+
+    // state register
+
+    always @ (posedge clock or negedge resetn)
+        if (! resetn)
+            state <= S0;
+        else
+            state <= next_state;
+
+    // next state logic
+
+    always @*
+        case (state)
+
+        S0:
+            if (a)
+                next_state <= S0;
+            else
+                next_state <= S1;
+
+        S1:
+            if (a)
+                next_state <= S2;
+            else
+                next_state <= S1;
+
+        S2:
+            if (a)
+                next_state <= S0;
+            else
+                next_state <= S1;
+
+        default:
+
+            next_state <= S0;
+
+        endcase
+
+    // output logic
+
+    assign y = (state == S2);
+
+endmodule
+
+//--------------------------------------------------------------------
+
+module pattern_fsm_mealy
+(
+    input  clock,
+    input  resetn,
+    input  a,
+    output y
+);
+
+    parameter S0 = 0, S1 = 1;
+
+    reg state, next_state;
+
+    // state register
+
+    always @ (posedge clock or negedge resetn)
+        if (! resetn)
+            state <= S0;
+        else
+            state <= next_state;
+
+    // next state logic
+
+    always @*
+        case (state)
+
+        S0:
+            if (a)
+                next_state <= S0;
+            else
+                next_state <= S1;
+
+        S1:
+            if (a)
+                next_state <= S0;
+            else
+                next_state <= S1;
+
+        default:
+
+            next_state <= S0;
+
+        endcase
+
+    // output logic
+
+    assign y = (a & state == S1);
+
+endmodule
+
+//--------------------------------------------------------------------
+
+module basys3_10
+(
+    input         clk,
+
+    input         btnC,
+    input         btnU,
+    input         btnL,
+    input         btnR,
+    input         btnD,
+
+    input  [15:0] sw,
+
+    output [15:0] led,
+
+    output [ 6:0] seg,
+    output        dp,
+    output [ 3:0] an
+);
+
+    wire clock;
+    wire resetn = ! btnU;
+
+    clock_divider_100_MHz_to_1_49_Hz clock_divider
+    (
+        .clock_100_MHz (clk),
+        .resetn        (resetn),
+        .clock_1_49_Hz (clock)
+    );
+
+    wire [15:0] shift_data_out;
+
+    shift_register shift_register
+    (
+        .clock      ( clock          ),
+        .resetn     ( resetn         ),
+        .in         ( btnC           ),
+        .out        (                ),
+        .data       ( shift_data_out )
+    );
+
+    wire fsm_in = shift_data_out [8];
+    assign led = shift_data_out;
+
+    wire moore_out;
+
+    pattern_fsm_moore pattern_fsm_moore
+    (
+        .clock  ( clock     ),
+        .resetn ( resetn    ),
+        .a      ( fsm_in    ),
+        .y      ( moore_out )
+    );
+
+    wire mealy_out;
+
+    pattern_fsm_mealy pattern_fsm_mealy
+    (
+        .clock  ( clock     ),
+        .resetn ( resetn    ),
+        .a      ( fsm_in    ),
+        .y      ( mealy_out )
+    );
+
+    assign seg [0] = ~  moore_out;
+    assign seg [1] = ~  moore_out;
+    assign seg [2] = ~  mealy_out;
+    assign seg [3] = ~  mealy_out;
+    assign seg [4] = ~  mealy_out;
+    assign seg [5] = ~  moore_out;
+    assign seg [6] = ~ (moore_out | mealy_out);
+
+    assign dp  = 1'b1;
+    assign an  = 4'b1110;
+
+endmodule
+</pre>
+</body>
+</html>
