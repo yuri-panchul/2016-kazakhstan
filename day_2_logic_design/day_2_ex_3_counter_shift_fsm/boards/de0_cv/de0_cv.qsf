@@ -466,5 +466,4 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_VS
 
 set_global_assignment -name SEARCH_PATH ..
 set_global_assignment -name VERILOG_FILE ../de0_cv.v
-set_global_assignment -name VERILOG_FILE ../../top.v
 set_global_assignment -name SDC_FILE de0_cv.sdc
