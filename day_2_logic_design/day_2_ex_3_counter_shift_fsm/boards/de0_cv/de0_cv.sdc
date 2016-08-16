@@ -7,7 +7,7 @@ create_clock -period 20 [get_ports CLOCK3_50]
 create_clock -period 20 [get_ports CLOCK_50]
 create_clock -period 20 [get_ports CLOCK4_50]
 
-create_clock -period 1000 [get_nets de0_cv_small|clock]
+create_clock -period 1000 [get_nets de0_cv_small:de0_cv_small|clock_divider_50_MHz_to_1_49_Hz:clock_divider_50_MHz_to_1_49_Hz|count[24]]
 
 #**************************************************************
 # Create Generated Clock

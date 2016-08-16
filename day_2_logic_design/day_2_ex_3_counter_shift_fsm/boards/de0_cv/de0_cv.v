@@ -81,21 +81,45 @@ module clock_divider_50_MHz_to_1_49_Hz
 
     // 50 MHz / 2 ** 25 = 1.49 Hz
 
-    reg [24:0] counter;
+    reg [24:0] count;
 
     always @ (posedge clock_50_MHz)
     begin
         if (! reset_n)
-            counter <= 0;
+            count <= 0;
         else
-            counter <= counter + 1;
+            count <= count + 1;
     end
 
-    assign clock_1_49_Hz = counter [24];
+    assign clock_1_49_Hz = count [24];
 
 endmodule
 
-//--------------------------------------------------------------------
+//----------------------------------------------------------------------------
+
+module counter_with_load
+(
+    input             clock,
+    input             reset_n,
+
+    input             load,
+    input      [15:0] load_data,
+    output reg [15:0] count
+);
+
+    always @ (posedge clock or negedge reset_n)
+    begin
+        if (! reset_n)
+            count <= 0;
+        else if (load)
+            count <= load_data;
+        else
+            count <= count + 1;
+    end
+
+endmodule
+
+//----------------------------------------------------------------------------
 
 module shift_register_with_enable
 (
@@ -119,7 +143,7 @@ module shift_register_with_enable
 
 endmodule
 
-//--------------------------------------------------------------------
+//----------------------------------------------------------------------------
 
 module single_digit_display
 (
@@ -149,7 +173,7 @@ module single_digit_display
 
 endmodule
 
-//--------------------------------------------------------------------
+//----------------------------------------------------------------------------
 
 // Smiling Snail FSM derived from David Harris & Sarah Harris
 
@@ -210,22 +234,73 @@ endmodule
 
 //----------------------------------------------------------------------------
 
+module pattern_fsm_mealy
+(
+    input  clock,
+    input  reset_n,
+    input  a,
+    output y
+);
+
+    parameter S0 = 1'b0, S1 = 1'b1;
+
+    reg state, next_state;
+
+    // state register
+
+    always @ (posedge clock or negedge reset_n)
+        if (! reset_n)
+            state <= S0;
+        else
+            state <= next_state;
+
+    // next state logic
+
+    always @*
+        case (state)
+
+        S0:
+            if (a)
+                next_state = S0;
+            else
+                next_state = S1;
+
+        S1:
+            if (a)
+                next_state = S0;
+            else
+                next_state = S1;
+
+        default:
+
+            next_state = S0;
+
+        endcase
+
+    // output logic
+
+    assign y = (a & state == S1);
+
+endmodule
+
+//----------------------------------------------------------------------------
+
 module de0_cv_small
 (
-    input           CLOCK_50,
-    input           RESET_N,
+    input          CLOCK_50,
+    input          RESET_N,
 
-    input   [ 3:0]  KEY,
-    input   [ 9:0]  SW,
+    input   [3:0]  KEY,
+    input   [9:0]  SW,
 
-    output  [ 9:0]  LEDR,
+    output  [9:0]  LEDR,
 
-    output  [ 6:0]  HEX0,
-    output  [ 6:0]  HEX1,
-    output  [ 6:0]  HEX2,
-    output  [ 6:0]  HEX3,
-    output  [ 6:0]  HEX4,
-    output  [ 6:0]  HEX5
+    output  [6:0]  HEX0,
+    output  [6:0]  HEX1,
+    output  [6:0]  HEX2,
+    output  [6:0]  HEX3,
+    output  [6:0]  HEX4,
+    output  [6:0]  HEX5
 );
 
     wire clock_before_global, clock, shift_out, fsm_out;
@@ -243,6 +318,42 @@ module de0_cv_small
         .out ( clock               )
     );
 
+    //------------------------------------------------------------------------
+
+    wire [15:0] count;
+
+    counter_with_load counter_with_load
+    (
+        .clock      (   clock        ),
+        .reset_n    (   RESET_N      ),
+
+        .load       ( ~ KEY [2]      ),
+        .load_data  (   { 6'b0, SW } ),
+        .count      (   count        )
+    );
+
+    //------------------------------------------------------------------------
+
+    single_digit_display digit_0
+    (
+        .digit          ( count [3: 0] ),
+        .seven_segments ( HEX0         )
+    );
+
+    single_digit_display digit_1
+    (
+        .digit          ( count [7: 4] ),
+        .seven_segments ( HEX1         )
+    );
+
+    single_digit_display digit_2
+    (
+        .digit          ( count [11:8] ),
+        .seven_segments ( HEX2         )
+    );
+
+    //------------------------------------------------------------------------
+
     shift_register_with_enable shift_register_with_enable
     (
         .clock   (   clock     ),
@@ -253,34 +364,28 @@ module de0_cv_small
         .data    (   LEDR      )
     );           
 
-    single_digit_display digit_0
-    (
-        .digit          ( LEDR [3:0] ),
-        .seven_segments ( HEX0 )
-    );
+    //------------------------------------------------------------------------
 
-    single_digit_display digit_1
-    (
-        .digit          ( LEDR [7:4] ),
-        .seven_segments ( HEX1 )
-    );
-
-    single_digit_display digit_2
-    (
-        .digit          ( { 2'b0 , LEDR [9:8] } ),
-        .seven_segments ( HEX2 )
-    );
+    wire moore_fsm_out, mealy_fsm_out;
 
     pattern_fsm_moore pattern_fsm_moore
     (
-        .clock   ( clock     ),
-        .reset_n ( RESET_N   ),
-        .a       ( shift_out ),
-        .y       ( fsm_out   )
+        .clock   ( clock         ),
+        .reset_n ( RESET_N       ),
+        .a       ( shift_out     ),
+        .y       ( moore_fsm_out )
     );
 
+    pattern_fsm_mealy pattern_fsm_mealy
+    (
+        .clock   ( clock         ),
+        .reset_n ( RESET_N       ),
+        .a       ( shift_out     ),
+        .y       ( mealy_fsm_out )
+    );
+
+    assign HEX5 = moore_fsm_out ? 7'b1100011 : 7'b1111111;
+    assign HEX4 = mealy_fsm_out ? 7'b1100011 : 7'b1111111;
     assign HEX3 = 7'h7f;
-    assign HEX4 = 7'h7f;
-    assign HEX5 = fsm_out ? 7'h40 : 7'h7f;
 
 endmodule
