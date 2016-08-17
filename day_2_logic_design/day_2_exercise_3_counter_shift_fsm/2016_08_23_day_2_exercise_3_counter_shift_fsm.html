@@ -13,7 +13,7 @@
 </p><p>
 </p><p>3.1. Modify the counter design to count in decimal instead of hexadecimal. Not 0, 1, 2, ... 9, A, B, C, D, E, F, 10, 11, ... FFFF - but 0, 1, 2, ... 9, 10, 11, ... 9999, 0, 1, 2, ... Hint: you may need to add decimal digits separately and propagate carry.
 </p><p>
-</p><p>3.2. Modify the counter design to count signed two's complement 12-bit number backwards. Output the result in hexadecimal representation with a sign: 000, -800, -7FF, -7FE, ... -002, -001, 000, 001, 002, ... 7FF, -800, ...
+</p><p>3.2. Modify the counter design to count signed two's complement 12-bit number backwards. Output the result in hexadecimal representation with a sign: 000, -001, -002, ... -7FE, -7FF, -800, (overflow), 7FF, 7FE, 7FD, ... 002, 001, 000, -001, -002 ...
 </p><p>
 </p><p>3.3. Modify the counter design to count with three different speeds, depending on pressed button.
 </p><p>
@@ -70,18 +70,6 @@
 </p><p>3.29. Implement a variant of exercise 27 where you count the number of sequences instead of just recognizing them. Output the value of the counter to seven-segment display.
 </p><p>  
 </p><p>3.30. Implement a variant of exercise 28 where you count the number of sequences instead of just recognizing them. Output the value of the counter to seven-segment display.
-</p><p>
-</p><p>Additional:
-</p><p>
-</p><p>3.31. Implement a variant of exercise 26 with fast clock (using 50 MHz clk instead of 1.49 Hz clock) for the shift register and state machines. When you press the input button once, the design may detect several "01" sequences because of bouncing. Try different buttons and switches on FPGA board as inputs. Report the results - are you able to detect bouncing?
-</p><p>  
-</p><p>3.32. A variant of exercise 31 modified to recognize the sequences of "0101" instead of "01". You need to implement only Moore machine.
-</p><p>  
-</p><p>3.33. A variant of exercise 31 modified to recognize the sequences of "010101" instead of "01". You need to implement only Mealy machine.
-</p><p>  
-</p><p>3.34. Modify the counter design to use ripple-carry adder built using logical operations instead of the adder created by synthesizing Verilog "+" operation.
-</p><p>  
-</p><p>3.35. Modify the counter design to use carry-lookahead adder built using logical operations instead of the adder created by synthesizing Verilog "+" operation.
 </p><p>
 </p><p>
 </p>
@@ -430,20 +418,26 @@ module de0_cv_small
 
     single_digit_display digit_0
     (
-        .digit          ( count [3: 0] ),
-        .seven_segments ( HEX0         )
+        .digit          ( count [ 3: 0] ),
+        .seven_segments ( HEX0          )
     );
 
     single_digit_display digit_1
     (
-        .digit          ( count [7: 4] ),
-        .seven_segments ( HEX1         )
+        .digit          ( count [ 7: 4] ),
+        .seven_segments ( HEX1          )
     );
 
     single_digit_display digit_2
     (
-        .digit          ( count [11:8] ),
-        .seven_segments ( HEX2         )
+        .digit          ( count [11: 8] ),
+        .seven_segments ( HEX2          )
+    );
+
+    single_digit_display digit_3
+    (
+        .digit          ( count [15:12] ),
+        .seven_segments ( HEX3          )
     );
 
     //------------------------------------------------------------------------
@@ -480,7 +474,6 @@ module de0_cv_small
 
     assign HEX5 = moore_fsm_out ? 7'b1100011 : 7'b1111111;
     assign HEX4 = mealy_fsm_out ? 7'b1100011 : 7'b1111111;
-    assign HEX3 = 7'h7f;
 
 endmodule
 
