@@ -336,20 +336,26 @@ module de0_cv_small
 
     single_digit_display digit_0
     (
-        .digit          ( count [3: 0] ),
-        .seven_segments ( HEX0         )
+        .digit          ( count [ 3: 0] ),
+        .seven_segments ( HEX0          )
     );
 
     single_digit_display digit_1
     (
-        .digit          ( count [7: 4] ),
-        .seven_segments ( HEX1         )
+        .digit          ( count [ 7: 4] ),
+        .seven_segments ( HEX1          )
     );
 
     single_digit_display digit_2
     (
-        .digit          ( count [11:8] ),
-        .seven_segments ( HEX2         )
+        .digit          ( count [11: 8] ),
+        .seven_segments ( HEX2          )
+    );
+
+    single_digit_display digit_3
+    (
+        .digit          ( count [15:12] ),
+        .seven_segments ( HEX3          )
     );
 
     //------------------------------------------------------------------------
@@ -386,6 +392,5 @@ module de0_cv_small
 
     assign HEX5 = moore_fsm_out ? 7'b1100011 : 7'b1111111;
     assign HEX4 = mealy_fsm_out ? 7'b1100011 : 7'b1111111;
-    assign HEX3 = 7'h7f;
 
 endmodule
