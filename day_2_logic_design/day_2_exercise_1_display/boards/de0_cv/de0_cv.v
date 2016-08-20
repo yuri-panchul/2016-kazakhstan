@@ -50,11 +50,26 @@ module de0_cv
     inout   [35:0]  GPIO_1
 );
 
-    output  [ 6:0]  HEX0,
-    output  [ 6:0]  HEX1,
-    output  [ 6:0]  HEX2,
-    output  [ 6:0]  HEX3,
-    output  [ 6:0]  HEX4,
-    output  [ 6:0]  HEX5,
+    parameter [6:0] A = 7'b1110111,
+                    L = 7'b1000111,
+                    M = 7'b1101010,
+                    N = 7'b0101010,
+                    S = 7'b0010010,
+                    T = 7'b0000111,
+                    Y = 7'b0010001;
+
+    wire sel = KEY [0];
+
+    assign HEX5 =       A;
+    assign HEX4 = sel ? L : S;
+    assign HEX3 = sel ? M : T;
+    assign HEX2 =       A;
+    assign HEX1 = sel ? T : N;
+    assign HEX0 = sel ? Y : A;
+
+    // Alternative way
+    
+    // assign { HEX5, HEX4, HEX3, HEX2, HEX1, HEX0 } =
+    //    sel ? { A, L, M, A, T, Y } : { A, S, T, A, N, A };
 
 endmodule
