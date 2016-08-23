@@ -1,117 +1,3 @@
-<html><body><big><big>
-
-<h2>Understanding Digital Logic Design</h2>
-<p>Joint seminar by Almaty Management University and Imagination Technologies</p>
-<p>August 23 2016</p>
-
-<h3>Exercise 2 - Combinational design - multiplexor</h3>
-
-<h3>Name ___________________________________________________________________</h3>
-
-<p>An example design below, implemented on Terasic DE0-CV board, implements
-various multiplexers in different ways.  Using this design as a guideline,
-implement the following multiplexer:</p><p>
-
-</p><p>
-
-</p><p>2.1. Implement 8-to-1 multiplexer using "?:" Verilog operator.
-
-</p><p>
-
-</p><p>2.2. Implement 8-to-1 multiplexer using "if" statement.
-
-</p><p>
-
-</p><p>2.3. Implement 8-to-1 multiplexer using "case" statement.
-
-</p><p>
-
-</p><p>2.4.  Implement 8-to-1 multiplexer by instantiating two 4-to-1
-multiplexers and one 2-to-1 multiplexer.  Implement both 4-to-1 and 2-to-1
-multiplexer modules using "?:" Verilog operator.
-
-</p><p>
-
-</p><p>2.5.  Implement 8-to-1 multiplexer by instantiating two 4-to-1
-multiplexers and one 2-to-1 multiplexer.  Implement both 4-to-1 and 2-to-1
-multiplexer modules using "if" statement.
-
-</p><p>
-
-</p><p>2.6.  Implement 8-to-1 multiplexer by instantiating two 4-to-1
-multiplexers and one 2-to-1 multiplexer.  Implement both 4-to-1 and 2-to-1
-multiplexer modules using "case" statement.
-
-</p><p>
-
-</p><p>2.7.  Implement 8-to-1 multiplexer by instantiating seven 2-to-1
-multiplexers.  Implement 2-to-1 multiplexer module using "?:" Verilog
-operator.
-
-</p><p>
-
-</p><p>2.8.  Implement 8-to-1 multiplexer by instantiating seven 2-to-1
-multiplexers.  Implement 2-to-1 multiplexer module using "if" statement.
-
-</p><p>
-
-</p><p>2.9.  Implement 8-to-1 multiplexer by instantiating seven 2-to-1
-multiplexers.  Implement 2-to-1 multiplexer module using "case" statement.
-
-</p><p>
-
-</p><p>2.10.  Implement 3-bit wide 3-to-1 multiplexer using "?:" Verilog
-operator.
-
-</p><p>
-
-</p><p>2.11.  Implement 3-bit wide 3-to-1 multiplexer using "if" statement.
-
-</p><p>
-
-</p><p>2.12.  Implement 3-bit wide 3-to-1 multiplexer using "case"
-statement.
-
-</p><p>
-
-</p><p>2.13.  Implement 3-bit wide 3-to-1 multiplexer by instantiating two
-3-bit wide 2-to-1 multiplexers.  Implement 2-to-1 multiplexer modules using
-"?:" Verilog operator.
-
-</p><p>
-
-</p><p>2.14.  Implement 3-bit wide 3-to-1 multiplexer by instantiating two
-3-bit wide 2-to-1 multiplexers.  Implement 2-to-1 multiplexer modules using
-using "if" statement.
-
-</p><p>
-
-</p><p>2.15.  Implement 3-bit wide 3-to-1 multiplexer by instantiating two
-3-bit wide 2-to-1 multiplexers.  Implement 2-to-1 multiplexer modules using
-using "case" statement.
-
-</p><p>
-
-</p><p>2.16.  Implement 3-bit wide 3-to-1 multiplexer by instantiating three
-1-bit wide 3-to-1 multiplexers.  Implement 1-bit wide 3-to-1 multiplexer
-modules using "?:" Verilog operator.
-
-</p><p>
-
-</p><p>2.17.  Implement 3-bit wide 3-to-1 multiplexer by instantiating three
-1-bit wide 3-to-1 multiplexers.  Implement 1-bit wide 3-to-1 multiplexer
-modules using "if" statement.
-
-</p><p>
-
-</p><p>2.18.  Implement 3-bit wide 3-to-1 multiplexer by instantiating three
-1-bit wide 3-to-1 multiplexers.  Implement 1-bit wide 3-to-1 multiplexer
-modules using "case" statement.
-
-</p><p>
-</p>
-<hr>
-<pre>
 module mux_2_1
 (
     input  [1:0] d0,
@@ -229,7 +115,7 @@ module de0_cv_small
     input  [9:0] SW,
     output [9:0] LEDR
 );
-
+/*
     mux_4_1_imp_1
     (
         .d0  ( SW   [1:0] ),
@@ -239,7 +125,7 @@ module de0_cv_small
         .sel ( KEY  [1:0] ),
         .y   ( LEDR [1:0] )
     ); 
-        
+*/
     mux_4_1_imp_2
     (
         .d0  ( SW   [1:0] ),
@@ -269,7 +155,7 @@ module de0_cv_small
         .sel ( KEY  [1:0] ),
         .y   ( LEDR [7:6] )
     ); 
-
+    */
 endmodule
 
 //----------------------------------------------------------------------------
@@ -334,8 +220,3 @@ module de0_cv
     );
 
 endmodule
-</pre>
-
-<p>Exercise created by Yuri Panchul</p>
-
-</big></big></body></html>
